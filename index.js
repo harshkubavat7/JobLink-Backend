@@ -22,12 +22,29 @@ const app = express();//instance of express
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-const corsOptions={
-  origin:"http://localhost:5173",
-  credentials:true,            //access-control-allow-credentials:true
-}
-app.use(cors(corsOptions));
+// const corsOptions={
+//   origin:["http://localhost:5173", "job-link-frontend.vercel.app"],
+//   credentials:true,            //access-control-allow-credentials:true
+// }
+// app.use(cors(corsOptions));
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://job-link-frontend.vercel.app"
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
+
+// VERY IMPORTANT: handle preflight
+app.options("*", cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 
 //api's
