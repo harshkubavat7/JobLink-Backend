@@ -40,11 +40,7 @@ app.use(cors({
   allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// VERY IMPORTANT: handle preflight
-app.options("*", cors({
-  origin: allowedOrigins,
-  credentials: true
-}));
+
 
 
 //api's
